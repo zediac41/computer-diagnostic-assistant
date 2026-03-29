@@ -102,7 +102,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Verify PSU switch is ON and 24-pin + CPU power cables are fully seated.",
       "Test with a known-good wall outlet and power cable.",
       "Disconnect non-essential peripherals and retry a minimal boot."
-    ]
+    ],
   },
   {
     id: "no-power-basics-laptop",
@@ -112,7 +112,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Confirm charger and barrel/USB-C connection are secure at both ends.",
       "Perform an EC reset (power drain), then retry with charger connected.",
       "Check charge LED behavior to determine if DC-in path is active."
-    ]
+    ],
   },
   {
     id: "no-display-gpu",
@@ -122,7 +122,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Confirm display cable is connected to the GPU output, not motherboard video.",
       "Reseat GPU and PCIe power leads.",
       "Boot with one RAM stick and clear CMOS/default BIOS settings."
-    ]
+    ],
   },
   {
     id: "repair-loop-startup",
@@ -132,7 +132,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Run Startup Repair once, then check boot order and UEFI mode.",
       "Run filesystem and system file checks from recovery media.",
       "If corruption persists, back up data and perform a clean Windows reinstall."
-    ]
+    ],
   },
   {
     id: "thermal-instability",
@@ -142,7 +142,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Check cooler mount pressure and thermal paste coverage.",
       "Verify pump/fan headers are detected and fan curves are active.",
       "Inspect for blocked airflow or heavy dust buildup."
-    ]
+    ],
   },
   {
     id: "thermal-throttling-load",
@@ -153,7 +153,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Validate cooling performance with a controlled stress test.",
       "Update BIOS/chipset firmware if throttling started after updates."
     ],
-    whenHappens: "Under Load"
+    whenHappens: "Under Load",
   },
   {
     id: "boot-loop-ram",
@@ -163,7 +163,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Reseat RAM and test one DIMM at a time.",
       "Disable memory overclock profile and retry POST.",
       "Update BIOS if memory compatibility is suspect."
-    ]
+    ],
   },
   {
     id: "bsod-driver",
@@ -173,7 +173,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Capture stop code, then update/reinstall GPU and chipset drivers.",
       "Run memory diagnostics and inspect recent hardware/software changes.",
       "Remove recent updates/drivers if crashes started immediately after a change."
-    ]
+    ],
   },
   {
     id: "game-crash-gpu",
@@ -183,7 +183,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Perform a clean GPU driver reinstall.",
       "Check GPU/CPU temperatures and clock stability during gameplay.",
       "Validate game files and disable aggressive overlays/overclocks."
-    ]
+    ],
   },
   {
     id: "storage-missing",
@@ -193,7 +193,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Reseat the M.2/SATA drive and confirm port visibility in BIOS.",
       "Update storage controller drivers and BIOS firmware.",
       "Test the drive in another slot/system to isolate drive vs board path."
-    ]
+    ],
   }
 ];
 

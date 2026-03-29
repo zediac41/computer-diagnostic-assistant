@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { SAMPLE_CASES, createInitialForm, OPTIONS } from "./data";
 import { getResultsForForm, makeSavedCase, toggleItem } from "./logic";
-import type { FormState, ResolutionState, SavedCase, SimilarPastCase } from "./types";
+import type { FormState, ResolutionState, SavedCase, SimilarPastCase, YesNoNA } from "./types";
 import { CustomerInfo } from "./components/CustomerInfo";
 import { SystemProfile } from "./components/SystemProfile";
 import { CommonQuestions } from "./components/CommonQuestions";
@@ -77,12 +77,12 @@ export default function App() {
     });
   };
 
-  const updateCommonQuestionAnswer = (question: string, value: "Yes" | "No" | "N/A") => {
+  const updateCommonQuestionAnswer = (question: string, answer: YesNoNA) => {
     setForm((prev) => ({
       ...prev,
       commonQuestionAnswers: {
-        ...prev.commonQuestionAnswers,
-        [question]: value
+        ...(prev.commonQuestionAnswers ?? {}),
+        [question]: answer
       }
     }));
   };

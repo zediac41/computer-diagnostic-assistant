@@ -15,20 +15,17 @@ function ruleMatchesForm(rule: SymptomFixRule, form: FormState): boolean {
 }
 
 export function getResultsForForm(form: FormState, cases: SavedCase[]): ResultsData {
-  const recommendedFixes: string[] = [];
-  const seenFixes = new Set<string>();
-  SYMPTOM_FIX_RULES.filter((rule) => ruleMatchesForm(rule, form)).forEach((rule) => {
-    rule.fixes.forEach((fix) => {
-      if (!seenFixes.has(fix)) {
-        seenFixes.add(fix);
-        recommendedFixes.push(fix);
-      }
-    });
-  });
+  const matchedFixes = Array.from(
+    new Set(
+      SYMPTOM_FIX_RULES
+        .filter((rule) => ruleMatchesForm(rule, form))
+        .flatMap((rule) => rule.fixes)
+    )
+  );
 
   const recommendedSteps =
-    recommendedFixes.length > 0
-      ? recommendedFixes.slice(0, 5)
+    matchedFixes.length > 0
+      ? matchedFixes.slice(0, 5)
       : [
           "Select at least one symptom to generate targeted fixes.",
           "Start with power, cable seating, and BIOS-default checks.",

@@ -24,7 +24,7 @@ export interface FormState {
   coolerType: string;
   visibleSymptoms: string[];
   customSymptoms: string[];
-  commonQuestionAnswers: Record<string, YesNoNA>;
+  commonQuestionAnswers?: Record<string, YesNoNA>;
   notes: string;
 }
 

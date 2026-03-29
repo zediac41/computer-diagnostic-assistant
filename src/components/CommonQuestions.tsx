@@ -1,5 +1,5 @@
 import { OPTIONS } from "../data";
-import type { FormState } from "../types";
+import type { FormState, YesNoNA } from "../types";
 import { Card } from "./Field";
 
 export function CommonQuestions({
@@ -7,7 +7,7 @@ export function CommonQuestions({
   updateAnswer
 }: {
   form: FormState;
-  updateAnswer: (question: string, value: "Yes" | "No" | "N/A") => void;
+  updateAnswer: (question: string, answer: YesNoNA) => void;
 }) {
   const questions = [
     ...OPTIONS.commonQuestions.both,
@@ -17,40 +17,52 @@ export function CommonQuestions({
         ? OPTIONS.commonQuestions.desktop
         : [])
   ];
+  const answers = form.commonQuestionAnswers ?? {};
 
   return (
     <div className="common-questions-panel">
       <Card title="Common Questions for Customers">
         <div className="stack">
-        {questions.map((question, idx) => (
-          <div key={question} className="question-item question-item--interactive">
-            <div className="question-text-wrap">
-              <span className="step-index">{idx + 1}</span>
+          {questions.map((question) => (
+            <div key={question} className="question-response-row">
+              <span className="question-text">{question}</span>
+              <div className="response-options" role="group" aria-label={`Response for: ${question}`}>
+                {OPTIONS.yesNoNA.map((option) => {
+                  const isActive = (answers[question] ?? "") === option;
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      className={isActive ? "response-chip active" : "response-chip"}
+                      onClick={() => updateAnswer(question, option as YesNoNA)}
+                      aria-pressed={isActive}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <label key={question} className="field">
               <span>{question}</span>
+              <select
+                value={answers[question] ?? ""}
+                onChange={(event) => updateAnswer(question, event.target.value as YesNoNA)}
+              >
+                <option value="">Select response</option>
+                {OPTIONS.yesNoNA.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ))}
+          {!form.deviceType ? (
+            <div className="empty-state">
+              Select Desktop or Laptop to show device-specific questions.
             </div>
-            <div className="question-actions" role="group" aria-label={`Response for: ${question}`}>
-              {OPTIONS.yesNoNA.map((choice) => (
-                <button
-                  key={choice}
-                  type="button"
-                  className={
-                    form.commonQuestionAnswers[question] === choice
-                      ? "response-chip response-chip--active"
-                      : "response-chip"
-                  }
-                  onClick={() => updateAnswer(question, choice)}
-                >
-                  {choice}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-        {!form.deviceType ? (
-          <div className="empty-state">
-            Select Desktop or Laptop to show device-specific questions.
-          </div>
-        ) : null}
+          ) : null}
         </div>
       </Card>
     </div>

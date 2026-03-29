@@ -115,6 +115,46 @@ button, input, textarea, select { font: inherit; }
   color: white;
 }
 
+.question-response-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #0b1220;
+}
+
+.question-text {
+  line-height: 1.35;
+}
+
+.response-options {
+  display: inline-flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.response-chip {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 5px 10px;
+  min-width: 48px;
+}
+
+.response-chip.active {
+  border-color: var(--green);
+  color: #dcfce7;
+  background: var(--green-bg);
+}
+
+.response-chip:hover {
+  border-color: #334155;
+}
+
 button {
   background: var(--accent);
   color: white;
@@ -309,12 +349,12 @@ button.secondary {
   .symptom-grid { grid-template-columns: 1fr; }
   .custom-row { grid-template-columns: 1fr; }
   .history-grid { grid-template-columns: 1fr; }
-  .question-item--interactive {
+  .question-response-row {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
   }
-  .question-actions {
-    margin-left: 0;
+  .response-options {
+    width: 100%;
   }
 }
 
