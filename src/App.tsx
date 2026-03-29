@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { SAMPLE_CASES, createInitialForm, OPTIONS } from "./data";
 import { getResultsForForm, makeSavedCase, toggleItem } from "./logic";
-import type { FormState, ResolutionState, SavedCase, SimilarPastCase } from "./types";
+import type { FormState, ResolutionState, SavedCase, SimilarPastCase, YesNoNA } from "./types";
 import { CustomerInfo } from "./components/CustomerInfo";
 import { SystemProfile } from "./components/SystemProfile";
 import { CommonQuestions } from "./components/CommonQuestions";
@@ -77,6 +77,16 @@ export default function App() {
     });
   };
 
+  const updateCommonQuestionAnswer = (question: string, answer: YesNoNA) => {
+    setForm((prev) => ({
+      ...prev,
+      commonQuestionAnswers: {
+        ...(prev.commonQuestionAnswers ?? {}),
+        [question]: answer
+      }
+    }));
+  };
+
   const clearForm = () => {
     setForm(createInitialForm());
     setResolution(createInitialResolution());
@@ -132,7 +142,7 @@ export default function App() {
               <CustomerInfo form={form} updateForm={updateForm} />
               <SystemProfile form={form} updateForm={updateForm} />
             </div>
-            <CommonQuestions form={form} />
+            <CommonQuestions form={form} updateAnswer={updateCommonQuestionAnswer} />
           </div>
           <Symptoms
             form={form}
