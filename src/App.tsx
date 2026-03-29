@@ -119,14 +119,28 @@ export default function App() {
     setForm({ ...item.rawForm });
     setActiveTab("new-case");
   };
-
   return (
     <div className="app-shell">
       <div className="container">
         <section className="hero">
-          <div>
-            <h1>Computer Diagnostic Assistant</h1>
-            <p>Internal troubleshooting prototype</p>
+          <div className="hero-left">
+            <div>
+              <h1>Computer Diagnostic Assistant</h1>
+              <p>Internal troubleshooting prototype</p>
+            </div>
+            <div className={form.deviceType ? "device-type-banner" : "device-type-banner needs-selection"}>
+              <label htmlFor="hero-device-type">Device Type</label>
+              <select
+                id="hero-device-type"
+                value={form.deviceType}
+                onChange={(event) => updateForm("deviceType", event.target.value)}
+              >
+                <option value="">Select one</option>
+                {OPTIONS.deviceTypes.map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="button-row">
             <button className="secondary" onClick={loadSample}>Load Sample</button>
@@ -146,8 +160,9 @@ export default function App() {
           <div className="stack-lg">
             <div className="grid two">
               <CustomerInfo form={form} updateForm={updateForm} />
-              <SystemProfile form={form} updateForm={updateForm} />
+              <CommonQuestions form={form} />
             </div>
+            <SystemProfile form={form} updateForm={updateForm} />
             <Symptoms
               form={form}
               updateSymptoms={(next) => updateForm("visibleSymptoms", next)}
