@@ -94,7 +94,6 @@ export default function App() {
     setForm({ ...item.rawForm });
     setActiveTab("new-case");
   };
-
   return (
     <div className="app-shell">
       <div className="container">
@@ -102,6 +101,19 @@ export default function App() {
           <div className="hero-title">
             <h1>Computer Diagnostic Assistant</h1>
             <p>Internal troubleshooting prototype</p>
+          </div>
+          <div className={form.deviceType ? "device-type-banner centered" : "device-type-banner centered needs-selection"}>
+            <label htmlFor="hero-device-type">Device Type</label>
+            <select
+              id="hero-device-type"
+              value={form.deviceType}
+              onChange={(event) => updateForm("deviceType", event.target.value)}
+            >
+              <option value="">Select one</option>
+              {OPTIONS.deviceTypes.map((type) => (
+                <option key={type} value={type}>{type}</option>
+              ))}
+            </select>
           </div>
           <div className={deviceTypeBannerClass}>
             <label htmlFor="hero-device-type">Device Type</label>
@@ -121,7 +133,7 @@ export default function App() {
             <button onClick={() => setActiveTab("results")}>Diagnose</button>
           </div>
         </section>
-
+        
         <div className="tabs">
           <button className={activeTab === "new-case" ? "tab active" : "tab"} onClick={() => setActiveTab("new-case")}>New Case</button>
           <button className={activeTab === "results" ? "tab active" : "tab"} onClick={() => setActiveTab("results")}>Results</button>
