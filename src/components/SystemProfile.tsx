@@ -13,12 +13,6 @@ export function SystemProfile({
     <Card title="System Profile">
       <div className="grid two">
         <SelectField
-          label="Device Type"
-          value={form.deviceType}
-          onChange={(v) => updateForm("deviceType", v)}
-          options={OPTIONS.deviceTypes}
-        />
-        <SelectField
           label="Storage Type"
           value={form.storageType}
           onChange={(v) => updateForm("storageType", v)}
