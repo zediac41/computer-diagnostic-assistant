@@ -124,6 +124,63 @@ export default function App() {
     </section>
   );
 
+  const renderActiveTab = () => {
+    if (activeTab === "new-case") {
+      return (
+        <div className="stack-lg">
+          <div className="grid two">
+            <div className="stack-lg">
+              <CustomerInfo form={form} updateForm={updateForm} />
+              <SystemProfile form={form} updateForm={updateForm} />
+            </div>
+            <CommonQuestions form={form} />
+          </div>
+          <Symptoms
+            form={form}
+            updateSymptoms={(next) => updateForm("visibleSymptoms", next)}
+            addCustomSymptom={addCustomSymptom}
+          />
+          <Card title="Notes">
+            <TextAreaField label="Notes" value={form.notes} onChange={(v) => updateForm("notes", v)} rows={6} />
+          </Card>
+        </div>
+      );
+    }
+
+    if (activeTab === "results") {
+      return (
+        <div className="stack-lg">
+          <ResultsView results={results} onShowPastCaseFix={setPastCaseFixPreview} />
+          {pastCaseFixPreview ? (
+            <Card
+              title="Past Case Final Fix"
+              right={<button className="secondary" onClick={() => setPastCaseFixPreview(null)}>Close</button>}
+            >
+              <div className="past-case-top">
+                <strong>{pastCaseFixPreview.title}</strong>
+                <span className="subtle">{pastCaseFixPreview.ticketNumber}</span>
+              </div>
+              <div className="fix-preview">{pastCaseFixPreview.finalFix}</div>
+            </Card>
+          ) : null}
+        </div>
+      );
+    }
+
+    if (activeTab === "resolution") {
+      return (
+        <ResolutionView
+          resolution={resolution}
+          setResolutionField={updateResolutionField}
+          toggleAction={(item) => updateResolutionField("actionsPerformed", toggleItem(resolution.actionsPerformed, item))}
+          saveResolution={saveResolution}
+          clearForm={clearForm}
+        />
+      );
+    }
+
+    return <CaseHistory cases={savedCases} onLoadCase={loadCaseFromHistory} />;
+  };
   return (
     <div className="app-shell">
       <div className="container">
@@ -132,6 +189,8 @@ export default function App() {
   return (
     <div className="app-shell">
       <div className="container">
+        {heroSection}
+
         <section className="hero">
           <div className="hero-title">
             <h1>Computer Diagnostic Assistant</h1>
@@ -166,6 +225,7 @@ export default function App() {
           <button className={activeTab === "resolution" ? "tab active" : "tab"} onClick={() => setActiveTab("resolution")}>Resolution</button>
           <button className={activeTab === "case-history" ? "tab active" : "tab"} onClick={() => setActiveTab("case-history")}>Case History</button>
         </div>
+        {renderActiveTab()}
 
         {activeTab === "new-case" ? (
           <div className="stack-lg">
