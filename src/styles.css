@@ -28,23 +28,20 @@ button, input, textarea, select { font: inherit; }
 
 .hero {
   padding: 20px 24px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) auto minmax(240px, 1fr);
   gap: 16px;
   align-items: center;
 }
 .hero h1 { margin: 0; font-size: 32px; }
 .hero p { margin: 4px 0 0; color: var(--muted); }
 
-.button-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.button-row { display: flex; gap: 10px; flex-wrap: wrap; justify-self: end; }
 
-.hero-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
+.hero-title {
+  min-width: 260px;
+  justify-self: start;
 }
-
 .device-type-banner {
   display: flex;
   flex-direction: column;
@@ -70,6 +67,9 @@ button, input, textarea, select { font: inherit; }
 .device-type-banner.needs-selection {
   border-color: var(--red);
   box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.35) inset;
+}
+.device-type-banner.centered {
+  justify-self: center;
 }
 
 .question-item {
@@ -270,7 +270,7 @@ button.secondary {
 @media (max-width: 700px) {
   .app-shell { padding: 12px; }
   .hero { flex-direction: column; align-items: stretch; }
-  .hero-left { align-items: stretch; }
+  .hero-title { text-align: center; }
   .device-type-banner { min-width: 100%; }
   .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .symptom-grid { grid-template-columns: 1fr; }
