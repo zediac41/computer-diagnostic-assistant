@@ -49,6 +49,18 @@ export interface ResultsData {
   similarCases: SimilarPastCase[];
 }
 
+export interface SymptomFixRule {
+  id: string;
+  symptom: string;
+  deviceType: "Desktop" | "Laptop" | "Both";
+  fixes: string[];
+  reason: string;
+  weight?: number;
+  whenHappens?: string;
+  whenStarted?: string;
+  gpuInstalled?: YesNo;
+}
+
 export interface SavedCase {
   id: number;
   ticketNumber: string;
