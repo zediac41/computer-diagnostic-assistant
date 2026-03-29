@@ -165,7 +165,6 @@ export default function App() {
               </div>
               <CommonQuestions form={form} />
             </div>
-            <SystemProfile form={form} updateForm={updateForm} />
             <Symptoms
               form={form}
               updateSymptoms={(next) => updateForm("visibleSymptoms", next)}
