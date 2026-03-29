@@ -9,7 +9,7 @@ export const OPTIONS = {
   successStates: ["Yes", "No", "Pending"],
   gpuTiers: ["Low", "Mid", "High"],
   ramSticks: ["2", "4"],
-  ramPerStick: ["8GB", "16GB", "24GB", "32GB", "48GB", "64GB"],
+  ramPerStick: ["8GB", "16GB", "24GB", "32GB"],
   storageTypes: ["Gen 4", "Gen 5"],
   coolerTypes: [
     "Stock CPU Cooler",
@@ -72,7 +72,24 @@ export const OPTIONS = {
     "Different Power Outlet",
     "Disconnect all Peripherals",
     "Reseated Internal Connections"
-  ]
+  ],
+  commonQuestions: {
+    both: [
+      "Is this your first time booting the computer?",
+      "Have you installed any extra parts or components?",
+      "Have you made any recent changes to your computer, BIOS or to Windows?"
+    ],
+    laptop: [
+      "Is your power cable firmly connected to the power brick and laptop?",
+      "Can you see any lights on your laptop?"
+    ],
+    desktop: [
+      "Did you have to install the GPU yourself?",
+      "Do you have your power cable connected, switched on PSU turned on and have pressed the power button?",
+      "Do you have your VGA cable connect to GPU or motherboard?",
+      "Are your fans and RGB lights on when powering on?"
+    ]
+  }
 } as const;
 
 let nextTicketNumber = 1003;

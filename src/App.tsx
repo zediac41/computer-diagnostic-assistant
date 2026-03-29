@@ -4,6 +4,7 @@ import { getPlaceholderResults, makeSavedCase, toggleItem } from "./logic";
 import type { FormState, ResolutionState, SavedCase, SimilarPastCase } from "./types";
 import { CustomerInfo } from "./components/CustomerInfo";
 import { SystemProfile } from "./components/SystemProfile";
+import { CommonQuestions } from "./components/CommonQuestions";
 import { Symptoms } from "./components/Symptoms";
 import { ResultsView } from "./components/ResultsView";
 import { ResolutionView } from "./components/ResolutionView";
