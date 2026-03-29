@@ -277,3 +277,23 @@ button.secondary {
   .custom-row { grid-template-columns: 1fr; }
   .history-grid { grid-template-columns: 1fr; }
 }
+
+.common-questions-panel .panel {
+  background: #10231a;
+  border-color: #2f6b4f;
+}
+
+.common-questions-panel .panel-header h3 {
+  color: #d7fbe8;
+}
+
+.common-questions-panel .question-item {
+  background: #163626;
+  border-color: #3d7a5d;
+}
+
+.common-questions-panel .empty-state {
+  background: #163626;
+  border-color: #3d7a5d;
+  color: #d7fbe8;
+}
