@@ -80,13 +80,13 @@ export const OPTIONS = {
       "Have you made any recent changes to your computer, BIOS or to Windows?"
     ],
     laptop: [
-      "Is your power cable firmly connected to the power brick and laptop?",
-      "Can you see any lights on your laptop?"
+      "Is your power cable firmly connected to the power brick and Laptop?",
+      "Can you see any lights on your Laptop?"
     ],
     desktop: [
       "Did you have to install the GPU yourself?",
       "Do you have your power cable connected, switched on PSU turned on and have pressed the power button?",
-      "Do you have your VGA cable connect to GPU or motherboard?",
+      "Do you have your VGA cable connect to GPU or Motherboard?",
       "Are your fans and RGB lights on when powering on?"
     ]
   }
