@@ -9,7 +9,7 @@ export const OPTIONS = {
   successStates: ["Yes", "No", "Pending"],
   gpuTiers: ["Low", "Mid", "High"],
   ramSticks: ["2", "4"],
-  ramPerStick: ["8GB", "16GB", "24GB", "32GB"],
+  ramPerStick: ["8GB", "16GB", "24GB", "32GB", "48GB", "64GB"],
   storageTypes: ["Gen 4", "Gen 5"],
   coolerTypes: [
     "Stock CPU Cooler",
