@@ -43,6 +43,20 @@ export function CommonQuestions({
                 })}
               </div>
             </div>
+            <label key={question} className="field">
+              <span>{question}</span>
+              <select
+                value={answers[question] ?? ""}
+                onChange={(event) => updateAnswer(question, event.target.value as YesNoNA)}
+              >
+                <option value="">Select response</option>
+                {OPTIONS.yesNoNA.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
           ))}
           {!form.deviceType ? (
             <div className="empty-state">
