@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SAMPLE_CASES, createInitialForm, OPTIONS } from "./data";
-import { getPlaceholderResults, makeSavedCase, toggleItem } from "./logic";
+import { getResultsForForm, makeSavedCase, toggleItem } from "./logic";
 import type { FormState, ResolutionState, SavedCase, SimilarPastCase } from "./types";
 import { CustomerInfo } from "./components/CustomerInfo";
 import { SystemProfile } from "./components/SystemProfile";
