@@ -13,7 +13,8 @@ export function CommonQuestions({ form }: { form: FormState }) {
   ];
 
   return (
-    <Card title="Common Questions for Customers">
+    <div className="common-questions-panel">
+      <Card title="Common Questions for Customers">
       <div className="stack">
         {questions.map((question, idx) => (
           <div key={question} className="question-item">
@@ -27,6 +28,7 @@ export function CommonQuestions({ form }: { form: FormState }) {
           </div>
         ) : null}
       </div>
-    </Card>
+      </Card>
+    </div>
   );
 }
