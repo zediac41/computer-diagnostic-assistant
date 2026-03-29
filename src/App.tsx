@@ -141,19 +141,6 @@ export default function App() {
                 ))}
               </select>
             </div>
-            <div className={form.deviceType ? "device-type-banner" : "device-type-banner needs-selection"}>
-              <label htmlFor="hero-device-type">Device Type</label>
-              <select
-                id="hero-device-type"
-                value={form.deviceType}
-                onChange={(event) => updateForm("deviceType", event.target.value)}
-              >
-                <option value="">Select one</option>
-                {OPTIONS.deviceTypes.map((type) => (
-                  <option key={type} value={type}>{type}</option>
-                ))}
-              </select>
-            </div>
           </div>
           <div className="button-row">
             <button className="secondary" onClick={loadSample}>Load Sample</button>
