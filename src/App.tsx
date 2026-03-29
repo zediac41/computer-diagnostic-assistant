@@ -33,6 +33,7 @@ export default function App() {
   const [savedCases, setSavedCases] = useState<SavedCase[]>(SAMPLE_CASES);
   const [pastCaseFixPreview, setPastCaseFixPreview] = useState<SimilarPastCase | null>(null);
 
+  const results = useMemo(() => getResultsForForm(form, savedCases), [form, savedCases]);
   const results = useMemo(() => getPlaceholderResults(), []);
   const deviceTypeBannerClass = form.deviceType
     ? "device-type-banner centered"
@@ -102,6 +103,7 @@ export default function App() {
             <h1>Computer Diagnostic Assistant</h1>
             <p>Internal troubleshooting prototype</p>
           </div>
+          <div className={deviceTypeBannerClass}>
           <div className={form.deviceType ? "device-type-banner centered" : "device-type-banner centered needs-selection"}>
             <label htmlFor="hero-device-type">Device Type</label>
             <select
@@ -111,6 +113,9 @@ export default function App() {
             >
               <option value="">Select one</option>
               {OPTIONS.deviceTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
                 <option key={type} value={type}>{type}</option>
               ))}
             </select>
