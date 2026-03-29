@@ -15,27 +15,20 @@ function ruleMatchesForm(rule: SymptomFixRule, form: FormState): boolean {
 }
 
 export function getResultsForForm(form: FormState, cases: SavedCase[]): ResultsData {
-  const fixScores = new Map<string, { score: number; reasons: string[] }>();
-
+  const recommendedFixes: string[] = [];
+  const seenFixes = new Set<string>();
   SYMPTOM_FIX_RULES.filter((rule) => ruleMatchesForm(rule, form)).forEach((rule) => {
-    const weight = rule.weight ?? 1;
     rule.fixes.forEach((fix) => {
-      const existing = fixScores.get(fix);
-      if (existing) {
-        existing.score += weight;
-        existing.reasons.push(rule.reason);
-      } else {
-        fixScores.set(fix, { score: weight, reasons: [rule.reason] });
+      if (!seenFixes.has(fix)) {
+        seenFixes.add(fix);
+        recommendedFixes.push(fix);
       }
     });
   });
 
   const recommendedSteps =
-    fixScores.size > 0
-      ? Array.from(fixScores.entries())
-          .sort((a, b) => b[1].score - a[1].score || a[0].localeCompare(b[0]))
-          .slice(0, 5)
-          .map(([fix, details]) => `${fix} (matched ${details.score} rule point${details.score > 1 ? "s" : ""})`)
+    recommendedFixes.length > 0
+      ? recommendedFixes.slice(0, 5)
       : [
           "Select at least one symptom to generate targeted fixes.",
           "Start with power, cable seating, and BIOS-default checks.",

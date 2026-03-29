@@ -1,4 +1,5 @@
 export type YesNo = "Yes" | "No" | "";
+export type YesNoNA = "Yes" | "No" | "N/A" | "";
 export type SuccessState = "Yes" | "No" | "Pending";
 
 export interface FormState {
@@ -23,6 +24,7 @@ export interface FormState {
   coolerType: string;
   visibleSymptoms: string[];
   customSymptoms: string[];
+  commonQuestionAnswers: Record<string, YesNoNA>;
   notes: string;
 }
 
@@ -54,8 +56,6 @@ export interface SymptomFixRule {
   symptom: string;
   deviceType: "Desktop" | "Laptop" | "Both";
   fixes: string[];
-  reason: string;
-  weight?: number;
   whenHappens?: string;
   whenStarted?: string;
   gpuInstalled?: YesNo;

@@ -6,6 +6,7 @@ export const OPTIONS = {
   stores: ["Xotic PC", "Extreme PCS", "Workstation PCS"],
   cpuTiers: ["Low", "Mid", "High"],
   yesNo: ["Yes", "No"],
+  yesNoNA: ["Yes", "No", "N/A"],
   successStates: ["Yes", "No", "Pending"],
   gpuTiers: ["Low", "Mid", "High"],
   ramSticks: ["2", "4"],
@@ -101,9 +102,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Verify PSU switch is ON and 24-pin + CPU power cables are fully seated.",
       "Test with a known-good wall outlet and power cable.",
       "Disconnect non-essential peripherals and retry a minimal boot."
-    ],
-    reason: "Most desktop no-power cases are traced to input power or core power cable seating.",
-    weight: 3
+    ]
   },
   {
     id: "no-power-basics-laptop",
@@ -113,9 +112,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Confirm charger and barrel/USB-C connection are secure at both ends.",
       "Perform an EC reset (power drain), then retry with charger connected.",
       "Check charge LED behavior to determine if DC-in path is active."
-    ],
-    reason: "Laptop no-power triage starts with adapter, battery, and embedded-controller reset checks.",
-    weight: 3
+    ]
   },
   {
     id: "no-display-gpu",
@@ -125,9 +122,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Confirm display cable is connected to the GPU output, not motherboard video.",
       "Reseat GPU and PCIe power leads.",
       "Boot with one RAM stick and clear CMOS/default BIOS settings."
-    ],
-    reason: "No-display with fan activity frequently points to display path, GPU seating, or memory training.",
-    weight: 3
+    ]
   },
   {
     id: "repair-loop-startup",
@@ -137,8 +132,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Run Startup Repair once, then check boot order and UEFI mode.",
       "Run filesystem and system file checks from recovery media.",
       "If corruption persists, back up data and perform a clean Windows reinstall."
-    ],
-    reason: "Repeated auto-repair loops are commonly boot corruption or disk integrity issues."
+    ]
   },
   {
     id: "thermal-instability",
@@ -148,9 +142,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Check cooler mount pressure and thermal paste coverage.",
       "Verify pump/fan headers are detected and fan curves are active.",
       "Inspect for blocked airflow or heavy dust buildup."
-    ],
-    reason: "Thermal faults often come from cooling contact, fan control, or airflow restrictions.",
-    weight: 2
+    ]
   },
   {
     id: "thermal-throttling-load",
@@ -161,9 +153,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Validate cooling performance with a controlled stress test.",
       "Update BIOS/chipset firmware if throttling started after updates."
     ],
-    reason: "Throttling under load can be thermal saturation or unstable firmware/power settings.",
-    whenHappens: "Under Load",
-    weight: 2
+    whenHappens: "Under Load"
   },
   {
     id: "boot-loop-ram",
@@ -173,9 +163,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Reseat RAM and test one DIMM at a time.",
       "Disable memory overclock profile and retry POST.",
       "Update BIOS if memory compatibility is suspect."
-    ],
-    reason: "Boot loops are frequently memory training or unstable memory profile issues.",
-    weight: 2
+    ]
   },
   {
     id: "bsod-driver",
@@ -185,8 +173,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Capture stop code, then update/reinstall GPU and chipset drivers.",
       "Run memory diagnostics and inspect recent hardware/software changes.",
       "Remove recent updates/drivers if crashes started immediately after a change."
-    ],
-    reason: "BSODs are often linked to driver faults, memory instability, or recent system changes."
+    ]
   },
   {
     id: "game-crash-gpu",
@@ -196,8 +183,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Perform a clean GPU driver reinstall.",
       "Check GPU/CPU temperatures and clock stability during gameplay.",
       "Validate game files and disable aggressive overlays/overclocks."
-    ],
-    reason: "Game-only crashes often correlate with GPU driver state or thermal/power instability."
+    ]
   },
   {
     id: "storage-missing",
@@ -207,8 +193,7 @@ export const SYMPTOM_FIX_RULES: SymptomFixRule[] = [
       "Reseat the M.2/SATA drive and confirm port visibility in BIOS.",
       "Update storage controller drivers and BIOS firmware.",
       "Test the drive in another slot/system to isolate drive vs board path."
-    ],
-    reason: "Missing drives are usually connection, slot/configuration, or drive health related."
+    ]
   }
 ];
 
@@ -243,6 +228,7 @@ export function createInitialForm(): FormState {
     coolerType: "",
     visibleSymptoms: [],
     customSymptoms: [],
+    commonQuestionAnswers: {},
     notes: ""
   };
 }
@@ -280,6 +266,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "360mm AIO",
       visibleSymptoms: ["Windows Freezing", "Overheating"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample desktop freeze case."
     }
   },
@@ -315,6 +302,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "",
       visibleSymptoms: ["Fans Spinning, No Display"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample laptop display case."
     }
   },
@@ -350,6 +338,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "240mm AIO",
       visibleSymptoms: ["Random Shutdowns", "Overheating"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample restart/shutdown case."
     }
   }
