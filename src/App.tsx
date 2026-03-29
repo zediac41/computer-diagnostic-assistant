@@ -95,6 +95,40 @@ export default function App() {
     setForm({ ...item.rawForm });
     setActiveTab("new-case");
   };
+
+  const heroSection = (
+    <section className="hero">
+      <div className="hero-title">
+        <h1>Computer Diagnostic Assistant</h1>
+        <p>Internal troubleshooting prototype</p>
+      </div>
+      <div className={deviceTypeBannerClass}>
+        <label htmlFor="hero-device-type">Device Type</label>
+        <select
+          id="hero-device-type"
+          value={form.deviceType}
+          onChange={(event) => updateForm("deviceType", event.target.value)}
+        >
+          <option value="">Select one</option>
+          {OPTIONS.deviceTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="button-row">
+        <button className="secondary" onClick={clearForm}>Clear Form</button>
+        <button onClick={() => setActiveTab("results")}>Diagnose</button>
+      </div>
+    </section>
+  );
+
+  return (
+    <div className="app-shell">
+      <div className="container">
+        {heroSection}
+
   return (
     <div className="app-shell">
       <div className="container">
