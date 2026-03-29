@@ -81,6 +81,39 @@ button, input, textarea, select { font: inherit; }
   padding: 14px;
   background: #0b1220;
 }
+.question-item--interactive {
+  justify-content: space-between;
+  align-items: center;
+}
+.question-text-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.question-actions {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 12px;
+  flex: 0 0 auto;
+}
+.response-chip {
+  background: #1f2937;
+  border: 1px solid #334155;
+  color: #d1fae5;
+  border-radius: 999px;
+  padding: 6px 10px;
+  min-width: 52px;
+}
+.response-chip:hover {
+  background: #264535;
+}
+.response-chip--active {
+  background: #059669;
+  border-color: #10b981;
+  color: white;
+}
 
 .question-response-row {
   display: flex;

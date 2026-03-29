@@ -266,6 +266,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "360mm AIO",
       visibleSymptoms: ["Windows Freezing", "Overheating"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample desktop freeze case."
     }
   },
@@ -301,6 +302,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "",
       visibleSymptoms: ["Fans Spinning, No Display"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample laptop display case."
     }
   },
@@ -336,6 +338,7 @@ export const SAMPLE_CASES: SavedCase[] = [
       coolerType: "240mm AIO",
       visibleSymptoms: ["Random Shutdowns", "Overheating"],
       customSymptoms: [],
+      commonQuestionAnswers: {},
       notes: "Sample restart/shutdown case."
     }
   }
