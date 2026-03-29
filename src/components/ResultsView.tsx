@@ -22,17 +22,21 @@ export function ResultsView({
       </Card>
 
       <Card title="Similar Past Cases">
-        <div className="stack">
-          {results.similarCases.map((item) => (
-            <button key={item.id} className="past-case-button" onClick={() => onShowPastCaseFix(item)}>
-              <div className="past-case-top">
-                <strong>{item.title}</strong>
-                <span>{item.ticketNumber}</span>
-              </div>
-              <div className="subtle">Click to view final fix</div>
-            </button>
-          ))}
-        </div>
+        {results.similarCases.length === 0 ? (
+          <div className="empty-state">No similar cases yet. Save resolved cases to build history.</div>
+        ) : (
+          <div className="stack">
+            {results.similarCases.map((item) => (
+              <button key={item.id} className="past-case-button" onClick={() => onShowPastCaseFix(item)}>
+                <div className="past-case-top">
+                  <strong>{item.title}</strong>
+                  <span>{item.ticketNumber}</span>
+                </div>
+                <div className="subtle">Click to view final fix</div>
+              </button>
+            ))}
+          </div>
+        )}
       </Card>
     </div>
   );

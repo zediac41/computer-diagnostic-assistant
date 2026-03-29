@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SAMPLE_CASES, createInitialForm, OPTIONS } from "./data";
-import { getPlaceholderResults, makeSavedCase, toggleItem } from "./logic";
+import { getResultsForForm, makeSavedCase, toggleItem } from "./logic";
 import type { FormState, ResolutionState, SavedCase, SimilarPastCase } from "./types";
 import { CustomerInfo } from "./components/CustomerInfo";
 import { SystemProfile } from "./components/SystemProfile";
@@ -33,7 +33,10 @@ export default function App() {
   const [savedCases, setSavedCases] = useState<SavedCase[]>(SAMPLE_CASES);
   const [pastCaseFixPreview, setPastCaseFixPreview] = useState<SimilarPastCase | null>(null);
 
-  const results = useMemo(() => getPlaceholderResults(), []);
+  const results = useMemo(() => getResultsForForm(form, savedCases), [form, savedCases]);
+  const deviceTypeBannerClass = form.deviceType
+    ? "device-type-banner centered"
+    : "device-type-banner centered needs-selection";
 
   const updateForm = (key: keyof FormState, value: string | string[]) => {
     setForm((prev) => {
@@ -74,34 +77,6 @@ export default function App() {
     });
   };
 
-  const loadSample = () => {
-    setForm({
-      ticketNumber: "X-2000",
-      orderNumber: "SO-45821",
-      contactType: "Ticket",
-      store: "Xotic PC",
-      customerName: "Sample Customer",
-      deviceType: "Desktop",
-      brand: "",
-      model: "",
-      motherboard: "MSI Z790 TOMAHAWK WIFI",
-      whenHappens: "While Gaming",
-      whenStarted: "Unknown",
-      cpuTier: "High",
-      gpuInstalled: "Yes",
-      gpuTier: "High",
-      gpuRiserCable: "No",
-      ramSticks: "2",
-      ramPerStick: "16GB",
-      storageType: "Gen 5",
-      coolerType: "360mm AIO",
-      visibleSymptoms: ["Windows Freezing", "Overheating", "Artifacting"],
-      customSymptoms: [],
-      notes: "Customer reports freezing during games after 20 to 30 minutes. Occasional display corruption before full lock-up."
-    });
-    setActiveTab("new-case");
-  };
-
   const clearForm = () => {
     setForm(createInitialForm());
     setResolution(createInitialResolution());
@@ -120,20 +95,96 @@ export default function App() {
     setActiveTab("new-case");
   };
 
+  const heroSection = (
+    <section className="hero">
+      <div className="hero-title">
+        <h1>Computer Diagnostic Assistant</h1>
+        <p>Internal troubleshooting prototype</p>
+      </div>
+      <div className={deviceTypeBannerClass}>
+        <label htmlFor="hero-device-type">Device Type</label>
+        <select
+          id="hero-device-type"
+          value={form.deviceType}
+          onChange={(event) => updateForm("deviceType", event.target.value)}
+        >
+          <option value="">Select one</option>
+          {OPTIONS.deviceTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="button-row">
+        <button className="secondary" onClick={clearForm}>Clear Form</button>
+        <button onClick={() => setActiveTab("results")}>Diagnose</button>
+      </div>
+    </section>
+  );
+
+  const renderActiveTab = () => {
+    if (activeTab === "new-case") {
+      return (
+        <div className="stack-lg">
+          <div className="grid two">
+            <div className="stack-lg">
+              <CustomerInfo form={form} updateForm={updateForm} />
+              <SystemProfile form={form} updateForm={updateForm} />
+            </div>
+            <CommonQuestions form={form} />
+          </div>
+          <Symptoms
+            form={form}
+            updateSymptoms={(next) => updateForm("visibleSymptoms", next)}
+            addCustomSymptom={addCustomSymptom}
+          />
+          <Card title="Notes">
+            <TextAreaField label="Notes" value={form.notes} onChange={(v) => updateForm("notes", v)} rows={6} />
+          </Card>
+        </div>
+      );
+    }
+
+    if (activeTab === "results") {
+      return (
+        <div className="stack-lg">
+          <ResultsView results={results} onShowPastCaseFix={setPastCaseFixPreview} />
+          {pastCaseFixPreview ? (
+            <Card
+              title="Past Case Final Fix"
+              right={<button className="secondary" onClick={() => setPastCaseFixPreview(null)}>Close</button>}
+            >
+              <div className="past-case-top">
+                <strong>{pastCaseFixPreview.title}</strong>
+                <span className="subtle">{pastCaseFixPreview.ticketNumber}</span>
+              </div>
+              <div className="fix-preview">{pastCaseFixPreview.finalFix}</div>
+            </Card>
+          ) : null}
+        </div>
+      );
+    }
+
+    if (activeTab === "resolution") {
+      return (
+        <ResolutionView
+          resolution={resolution}
+          setResolutionField={updateResolutionField}
+          toggleAction={(item) => updateResolutionField("actionsPerformed", toggleItem(resolution.actionsPerformed, item))}
+          saveResolution={saveResolution}
+          clearForm={clearForm}
+        />
+      );
+    }
+
+    return <CaseHistory cases={savedCases} onLoadCase={loadCaseFromHistory} />;
+  };
+
   return (
     <div className="app-shell">
       <div className="container">
-        <section className="hero">
-          <div>
-            <h1>Computer Diagnostic Assistant</h1>
-            <p>Internal troubleshooting prototype</p>
-          </div>
-          <div className="button-row">
-            <button className="secondary" onClick={loadSample}>Load Sample</button>
-            <button className="secondary" onClick={clearForm}>Clear Form</button>
-            <button onClick={() => setActiveTab("results")}>Diagnose</button>
-          </div>
-        </section>
+        {heroSection}
 
         <div className="tabs">
           <button className={activeTab === "new-case" ? "tab active" : "tab"} onClick={() => setActiveTab("new-case")}>New Case</button>
@@ -141,55 +192,7 @@ export default function App() {
           <button className={activeTab === "resolution" ? "tab active" : "tab"} onClick={() => setActiveTab("resolution")}>Resolution</button>
           <button className={activeTab === "case-history" ? "tab active" : "tab"} onClick={() => setActiveTab("case-history")}>Case History</button>
         </div>
-
-        {activeTab === "new-case" ? (
-          <div className="stack-lg">
-            <div className="grid two">
-              <CustomerInfo form={form} updateForm={updateForm} />
-              <SystemProfile form={form} updateForm={updateForm} />
-            </div>
-            <Symptoms
-              form={form}
-              updateSymptoms={(next) => updateForm("visibleSymptoms", next)}
-              addCustomSymptom={addCustomSymptom}
-            />
-            <Card title="Notes">
-              <TextAreaField label="Notes" value={form.notes} onChange={(v) => updateForm("notes", v)} rows={6} />
-            </Card>
-          </div>
-        ) : null}
-
-        {activeTab === "results" ? (
-          <div className="stack-lg">
-            <ResultsView results={results} onShowPastCaseFix={setPastCaseFixPreview} />
-            {pastCaseFixPreview ? (
-              <Card
-                title="Past Case Final Fix"
-                right={<button className="secondary" onClick={() => setPastCaseFixPreview(null)}>Close</button>}
-              >
-                <div className="past-case-top">
-                  <strong>{pastCaseFixPreview.title}</strong>
-                  <span className="subtle">{pastCaseFixPreview.ticketNumber}</span>
-                </div>
-                <div className="fix-preview">{pastCaseFixPreview.finalFix}</div>
-              </Card>
-            ) : null}
-          </div>
-        ) : null}
-
-        {activeTab === "resolution" ? (
-          <ResolutionView
-            resolution={resolution}
-            setResolutionField={updateResolutionField}
-            toggleAction={(item) => updateResolutionField("actionsPerformed", toggleItem(resolution.actionsPerformed, item))}
-            saveResolution={saveResolution}
-            clearForm={clearForm}
-          />
-        ) : null}
-
-        {activeTab === "case-history" ? (
-          <CaseHistory cases={savedCases} onLoadCase={loadCaseFromHistory} />
-        ) : null}
+        {renderActiveTab()}
       </div>
     </div>
   );
