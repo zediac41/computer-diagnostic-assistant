@@ -141,6 +141,19 @@ export default function App() {
                 ))}
               </select>
             </div>
+            <div className={form.deviceType ? "device-type-banner" : "device-type-banner needs-selection"}>
+              <label htmlFor="hero-device-type">Device Type</label>
+              <select
+                id="hero-device-type"
+                value={form.deviceType}
+                onChange={(event) => updateForm("deviceType", event.target.value)}
+              >
+                <option value="">Select one</option>
+                {OPTIONS.deviceTypes.map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="button-row">
             <button className="secondary" onClick={loadSample}>Load Sample</button>
@@ -148,7 +161,7 @@ export default function App() {
             <button onClick={() => setActiveTab("results")}>Diagnose</button>
           </div>
         </section>
-
+        
         <div className="tabs">
           <button className={activeTab === "new-case" ? "tab active" : "tab"} onClick={() => setActiveTab("new-case")}>New Case</button>
           <button className={activeTab === "results" ? "tab active" : "tab"} onClick={() => setActiveTab("results")}>Results</button>
@@ -159,7 +172,10 @@ export default function App() {
         {activeTab === "new-case" ? (
           <div className="stack-lg">
             <div className="grid two">
-              <CustomerInfo form={form} updateForm={updateForm} />
+              <div className="stack-lg">
+                <CustomerInfo form={form} updateForm={updateForm} />
+                <SystemProfile form={form} updateForm={updateForm} />
+              </div>
               <CommonQuestions form={form} />
             </div>
             <SystemProfile form={form} updateForm={updateForm} />
